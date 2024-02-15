@@ -1,7 +1,8 @@
 import { FormEvent, MouseEventHandler } from "react"
+import { IconType } from "react-icons"
 
 export interface TypeExpense {
-  id: string | undefined
+  id: string
   date: string
   amount: number
   title: string
@@ -20,9 +21,9 @@ export interface TypeExpenseListItem {
 
 export interface TypePrincingPlan {
   title: string
-  price: number
+  price: string
   perks: string[]
-  icon: string
+  icon: IconType
 }
 
 export interface TypeError {

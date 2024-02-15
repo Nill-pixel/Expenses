@@ -1,3 +1,11 @@
+import Chart from "~/components/expenses/Chart";
+import ExpenseStatistics from "~/components/expenses/ExpensiveStatic";
+import { DUMMY_EXPENSES } from "~/datas/datas";
+
+
 export default function ExpensesAnalysisPage() {
-  return <h1>Expenses Analysis Page</h1>
+  return <main>
+    <Chart expenses={DUMMY_EXPENSES} />
+    <ExpenseStatistics expenses={DUMMY_EXPENSES} />
+  </main>
 }

@@ -1,3 +1,4 @@
+import { Link } from "@remix-run/react";
 import { TypeExpense } from "../types/Types";
 
 
@@ -14,7 +15,7 @@ const ExpenseListItem: React.FC<TypeExpense> = ({ id, title, amount }) => {
       </div>
       <menu className="expense-actions">
         <button onClick={deleteExpenseItemHandler}>Delete</button>
-        <a href="tbd">Edit</a>
+        <Link to={id}>Edit</Link>
       </menu>
     </article>
   );
