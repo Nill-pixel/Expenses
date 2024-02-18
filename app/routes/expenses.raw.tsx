@@ -1,3 +1,6 @@
-export default function ExpensesRawPage() {
-  return <h1>Expenses Raw Page</h1>
+import { LoaderFunction } from "@remix-run/node";
+import { DUMMY_EXPENSES } from "~/datas/datas";
+
+export const loader: LoaderFunction = () => {
+  return DUMMY_EXPENSES;
 }
