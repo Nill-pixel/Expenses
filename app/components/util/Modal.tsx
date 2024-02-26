@@ -1,4 +1,4 @@
-import { TypeModal } from "../types/Types";
+import { TypeModal } from "../../types/Types";
 
 const Modal: React.FC<TypeModal> = ({ children, onClose }) => {
   return (

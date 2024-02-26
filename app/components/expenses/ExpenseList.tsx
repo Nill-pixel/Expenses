@@ -1,4 +1,4 @@
-import { TypeExpense } from '../types/Types';
+import { TypeExpense } from '../../types/Types';
 import ExpenseListItem from './ExpenseListItem';
 
 interface ExpenseProps {

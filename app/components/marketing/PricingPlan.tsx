@@ -1,4 +1,4 @@
-import { TypePrincingPlan } from "../types/Types";
+import { TypePrincingPlan } from "../../types/Types";
 
 const PricingPlan: React.FC<TypePrincingPlan> = ({ title, price, perks, icon }) => {
   const Icon = icon;

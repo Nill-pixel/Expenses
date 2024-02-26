@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import { TypeExpense } from "../types/Types";
+import { TypeExpense } from "../../types/Types";
 
 
 const ExpenseListItem: React.FC<TypeExpense> = ({ id, title, amount }) => {

@@ -1,4 +1,4 @@
-import { TypeExpense } from '../types/Types';
+import { TypeExpense } from '../../types/Types';
 import ChartBar from './ChartBar';
 
 interface ChartProps {

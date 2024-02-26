@@ -1,4 +1,4 @@
-import { TypeChartBarType } from "../types/Types";
+import { TypeChartBarType } from "../../types/Types";
 
 const ChartBar: React.FC<TypeChartBarType> = ({ maxValue, value, label }) => {
   let barFillHeight = '0%';

@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { TypeExpense } from '../types/Types';
+import { TypeExpense } from '../../types/Types';
 interface ExpenseProps {
   expenses: TypeExpense[]
 }
