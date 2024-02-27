@@ -1,7 +1,10 @@
-import { ActionFunction } from "@remix-run/node";
+import { ActionFunction, redirect } from "@remix-run/node";
 import { useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
+import { TypeExpense } from "~/types/Types";
+import { addExpense } from "~/utils/expenses.server";
+import { validateExpenseInput } from "~/utils/validation.server";
 
 export default function AddExpensesPage() {
   const navigate = useNavigate()
@@ -16,6 +19,17 @@ export default function AddExpensesPage() {
   )
 }
 
-export const action: ActionFunction = () => {
+export const action: ActionFunction = async ({ request }) => {
+  const formData = await request.formData()
+  const expensesData: TypeExpense = Object.fromEntries(formData) as unknown as TypeExpense
 
+  try {
+    validateExpenseInput(expensesData)
+  } catch (error) {
+    return error
+  }
+
+
+  addExpense(expensesData)
+  return redirect('/expenses')
 }

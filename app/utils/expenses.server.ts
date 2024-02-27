@@ -3,7 +3,7 @@ import { prisma } from "./database.server"
 
 export const addExpense = async (expenseData: TypeExpense) => {
   try {
-    await prisma.expense.create({
+    await prisma.expenses.create({
       data: {
         title: expenseData.title,
         amount: +expenseData.amount,
@@ -12,6 +12,7 @@ export const addExpense = async (expenseData: TypeExpense) => {
     });
   } catch (error) {
     console.log(error)
+    throw error
   }
 
 }

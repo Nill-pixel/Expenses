@@ -4,7 +4,7 @@ import { IconType } from "react-icons"
 export interface TypeExpense {
   id: string
   date: string
-  amount: number
+  amount: string
   title: string
 }
 
@@ -35,3 +35,8 @@ export interface TypeModal {
   children: React.ReactNode;
   onClose: MouseEventHandler<HTMLDivElement>
 }
+
+export interface ValidationError {
+  field: string;
+  message: string;
+};
