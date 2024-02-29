@@ -43,7 +43,7 @@ function ExpenseForm() {
   // }
 
   return (
-    <Form method="post" className="form" id="expense-form" //onSubmit={submitHandler}
+    <Form method={expenseData ? 'PATCH' : 'POST'} className="form" id="expense-form" //onSubmit={submitHandler}
     >
       <p>
         <label htmlFor="title">Expense Title</label>
