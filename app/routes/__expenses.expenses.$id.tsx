@@ -1,8 +1,11 @@
-import { LoaderFunction } from "@remix-run/node";
+import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
-import { getExpense } from "~/utils/expenses.server";
+import { TypeExpense } from "~/types/Types";
+import { updateExpense } from "~/utils/expenses.server";
+import { validateExpenseInput } from "~/utils/validation.server";
+// import { getExpense } from "~/utils/expenses.server";
 
 export default function UpdateExpensesPage() {
   const navigate = useNavigate()
@@ -15,8 +18,24 @@ export default function UpdateExpensesPage() {
   </Modal>
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+// export const loader: LoaderFunction = async ({ params }) => {
+//   const expenseId = params.id as string
+//   const expenseData = await getExpense(expenseId)
+//   return { expenseData }
+// }
+
+
+export const action: ActionFunction = async ({ params, request }) => {
   const expenseId = params.id as string
-  const expenseData = await getExpense(expenseId)
-  return { expenseData }
+  const formData = await request.formData()
+  const expensesData: TypeExpense = Object.fromEntries(formData) as unknown as TypeExpense
+
+  try {
+    validateExpenseInput(expensesData)
+  } catch (error) {
+    return error
+  }
+
+  await updateExpense(expenseId, expensesData)
+  return redirect('/expenses')
 }

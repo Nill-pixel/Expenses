@@ -1,17 +1,27 @@
-import { Form, Link, useActionData, useLoaderData, useNavigation, useSubmit } from "@remix-run/react";
+import { Form, Link, useActionData, useLoaderData, useMatches, useNavigation, useParams, useSubmit } from "@remix-run/react";
 import { TypeExpense, ValidationError } from "~/types/Types";
 
 interface TypeExpenseProps {
-  expenseData: TypeExpense
+  expenses: TypeExpense[]
+}
+
+
+interface Match {
+  id: string,
+  data: TypeExpense
 }
 
 
 function ExpenseForm() {
   const today = new Date().toISOString().slice(0, 10); // yields something like 2023-09-10
   const validationErrors = useActionData<ValidationError>()
-  const { expenseData } = useLoaderData<TypeExpenseProps>()
+  // const { expenseData } = useLoaderData<TypeExpenseProps>()
   const navigation = useNavigation()
   const isSubmitting = navigation.state !== 'idle';
+  const params = useParams()
+  const matches = useMatches()
+  const expenses = matches.find(match => match.id === 'routes/__expenses.expenses')?.data as TypeExpenseProps
+  const expenseData = expenses.expenses.find((expense) => expense.id === params.id)
 
   const defaultValues = expenseData
     ? {
