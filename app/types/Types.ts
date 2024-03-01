@@ -28,7 +28,7 @@ export interface TypePrincingPlan {
 
 export interface TypeError {
   title: string
-  children: string
+  children: React.ReactNode
 }
 
 export interface TypeModal {
@@ -40,3 +40,8 @@ export interface ValidationError {
   field: string;
   message: string;
 };
+
+export interface TypeUser {
+  email: string
+  password: string
+}
