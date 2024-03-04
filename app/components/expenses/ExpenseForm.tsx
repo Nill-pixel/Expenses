@@ -1,16 +1,9 @@
-import { Form, Link, useActionData, useLoaderData, useMatches, useNavigation, useParams, useSubmit } from "@remix-run/react";
+import { Form, Link, useActionData, useMatches, useNavigation, useParams, } from "@remix-run/react";
 import { TypeExpense, ValidationError } from "~/types/Types";
 
 interface TypeExpenseProps {
   expenses: TypeExpense[]
 }
-
-
-interface Match {
-  id: string,
-  data: TypeExpense
-}
-
 
 function ExpenseForm() {
   const today = new Date().toISOString().slice(0, 10); // yields something like 2023-09-10
@@ -22,6 +15,10 @@ function ExpenseForm() {
   const matches = useMatches()
   const expenses = matches.find(match => match.id === 'routes/__expenses.expenses')?.data as TypeExpenseProps
   const expenseData = expenses.expenses.find((expense) => expense.id === params.id)
+
+  if (params.id && !expenseData) {
+    return <p>Invalid expense id</p>
+  }
 
   const defaultValues = expenseData
     ? {

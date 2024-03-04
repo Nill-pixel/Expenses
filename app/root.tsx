@@ -20,7 +20,7 @@ interface DocumentProps {
   children: React.ReactNode
 }
 
-const Document: React.FC<DocumentProps> = ({ title, children }) => {
+export const Document: React.FC<DocumentProps> = ({ title, children }) => {
   return (
     <html lang="en">
       <head>
@@ -44,14 +44,14 @@ const Document: React.FC<DocumentProps> = ({ title, children }) => {
 export default function App() {
   return (
     <Document title="Expense Web">
-      s
+      <title></title>
     </Document>
   );
 }
 
 
 export function ErrorBoundary() {
-  const error = useRouteError();
+  const error = useRouteError() as Error;
 
   // when true, this is what used to go to `CatchBoundary`
   if (isRouteErrorResponse(error)) {
@@ -72,13 +72,21 @@ export function ErrorBoundary() {
     );
   }
 
-  let errorMessage = "Unknown error";
+  let errorMessage = "An error occurred";
 
-  return (
-    <div>
-      <h1>Uh oh ...</h1>
-      <p>Something went wrong.</p>
-      <pre>{errorMessage}</pre>
-    </div>
+  return (<>
+    <Document title={errorMessage}>
+      <main>
+        <Error title={errorMessage}>
+          <p>
+            {error.message ||
+              'Sommentig went wrong. Please try again later.'}
+          </p>
+          <p>Back to <Link to="/">safety</Link>.</p>
+        </Error>
+
+      </main>
+    </Document>
+  </>
   );
 }

@@ -1,5 +1,5 @@
-import { LoaderFunction } from "@remix-run/node";
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { LoaderFunction, json } from "@remix-run/node";
+import { Link, Outlet, isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
 import { FaDownload, FaPlus } from "react-icons/fa";
 import ExpensesList from "~/components/expenses/ExpenseList";
 import { TypeExpense } from "~/types/Types";
@@ -11,6 +11,7 @@ interface TypeExpenseProps {
 
 export default function ExpensiveLayout() {
   const { expenses } = useLoaderData<TypeExpenseProps>();
+  const hasExpenses = expenses && expenses.length > 0;
   return <>
     <Outlet />
     <main>
@@ -24,12 +25,20 @@ export default function ExpensiveLayout() {
           <span>Load Raw Data</span>
         </a>
       </section>
-      <ExpensesList expenses={expenses} />
+      {hasExpenses && <ExpensesList expenses={expenses} />}
+      {!hasExpenses && <section id="no-expenses">
+        <h1>No expenses found</h1>
+        <p>Start <Link to="add">Adding some</Link> today</p>
+      </section>}
     </main>
   </>
 }
 
 export const loader: LoaderFunction = async () => {
   const expenses = await getExpenses();
+  // if (!expenses || expenses.length === 0) {
+  //   throw json({ message: 'Could not find any expenses' }, { status: 404, statusText: 'No expenses found! ' })
+  // }
   return { expenses }
 }
+

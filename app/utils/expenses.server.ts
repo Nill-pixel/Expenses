@@ -11,8 +11,7 @@ export const addExpense = async (expenseData: TypeExpense) => {
       }
     });
   } catch (error) {
-    console.log(error)
-    throw error
+    throw new Error('Failed to add expense.')
   }
 
 }
@@ -26,7 +25,7 @@ export const getExpenses = async () => {
     })
     return expenses
   } catch (error) {
-    throw error
+    throw new Error('Failed to get expenses.')
   }
 
 }
@@ -36,7 +35,7 @@ export const getExpense = async (id: string) => {
     const expense = await prisma.expenses.findFirst({ where: { id: id } })
     return expense
   } catch (error) {
-    throw error
+    throw new Error('Failed to get expense.')
   }
 
 }
@@ -53,7 +52,7 @@ export const updateExpense = async (id: string, expenseData: TypeExpense) => {
       }
     })
   } catch (error) {
-    throw error
+    throw new Error('Failed to update expense.')
   }
 
 }
@@ -64,6 +63,6 @@ export const deleteExpense = async (id: string) => {
       where: { id }
     })
   } catch (error) {
-    throw error
+    throw new Error('Failed to delete expense.')
   }
 }
