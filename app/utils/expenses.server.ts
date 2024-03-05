@@ -3,7 +3,7 @@ import { prisma } from "./database.server"
 
 export const addExpense = async (expenseData: TypeExpense) => {
   try {
-    await prisma.expenses.create({
+    await prisma.expense.create({
       data: {
         title: expenseData.title,
         amount: +expenseData.amount,
@@ -18,7 +18,7 @@ export const addExpense = async (expenseData: TypeExpense) => {
 
 export const getExpenses = async () => {
   try {
-    const expenses = await prisma.expenses.findMany({
+    const expenses = await prisma.expense.findMany({
       orderBy: {
         date: 'desc'
       }
@@ -32,7 +32,7 @@ export const getExpenses = async () => {
 
 export const getExpense = async (id: string) => {
   try {
-    const expense = await prisma.expenses.findFirst({ where: { id: id } })
+    const expense = await prisma.expense.findFirst({ where: { id: id } })
     return expense
   } catch (error) {
     throw new Error('Failed to get expense.')
@@ -43,7 +43,7 @@ export const getExpense = async (id: string) => {
 
 export const updateExpense = async (id: string, expenseData: TypeExpense) => {
   try {
-    await prisma.expenses.update({
+    await prisma.expense.update({
       where: { id },
       data: {
         title: expenseData.title,
@@ -59,7 +59,7 @@ export const updateExpense = async (id: string, expenseData: TypeExpense) => {
 
 export const deleteExpense = async (id: string) => {
   try {
-    await prisma.expenses.delete({
+    await prisma.expense.delete({
       where: { id }
     })
   } catch (error) {
