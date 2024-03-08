@@ -3,6 +3,7 @@ import { useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
 import { TypeExpense } from "~/types/Types";
+import { requiredUserSession } from "~/utils/auth.server";
 import { addExpense } from "~/utils/expenses.server";
 import { validateExpenseInput } from "~/utils/validation.server";
 
@@ -20,6 +21,7 @@ export default function AddExpensesPage() {
 }
 
 export const action: ActionFunction = async ({ request }) => {
+  const userId = await requiredUserSession(request)
   const formData = await request.formData()
   const expensesData: TypeExpense = Object.fromEntries(formData) as unknown as TypeExpense
 
@@ -30,6 +32,6 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
 
-  addExpense(expensesData)
+  addExpense(expensesData, userId)
   return redirect('/expenses')
 }

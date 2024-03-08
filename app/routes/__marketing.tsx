@@ -11,8 +11,8 @@ export default function MarketingLayout() {
   </>
 }
 
-export const loader: LoaderFunction = ({ request }) => {
-  const userId = getUserFromSession(request)
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await getUserFromSession(request) as string
   return { userId }
 }
 

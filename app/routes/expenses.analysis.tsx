@@ -7,6 +7,7 @@ import { TypeExpense } from "~/types/Types";
 import { Link, isRouteErrorResponse, useLoaderData, useRouteError } from "@remix-run/react";
 import { getExpenses } from "~/utils/expenses.server";
 import Error from "~/components/util/Error";
+import { requiredUserSession } from "~/utils/auth.server";
 
 interface TypeExpenseProps {
   expenses: TypeExpense[]
@@ -28,8 +29,9 @@ export const links: LinksFunction = () => {
   return [{ rel: "stylesheet", href: expensesStyle }]
 }
 
-export const loader: LoaderFunction = async () => {
-  const expenses = await getExpenses();
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await requiredUserSession(request)
+  const expenses = await getExpenses(userId);
   if (!expenses || expenses.length === 0) {
     throw json({ message: 'Could not load expenses for the requested analysis' }, { status: 404, statusText: 'No expenses found! ' })
   }

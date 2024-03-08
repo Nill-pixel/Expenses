@@ -3,6 +3,7 @@ import { Link, Outlet, isRouteErrorResponse, useLoaderData, useRouteError } from
 import { FaDownload, FaPlus } from "react-icons/fa";
 import ExpensesList from "~/components/expenses/ExpenseList";
 import { TypeExpense } from "~/types/Types";
+import { requiredUserSession } from "~/utils/auth.server";
 import { getExpenses } from "~/utils/expenses.server";
 
 interface TypeExpenseProps {
@@ -34,8 +35,9 @@ export default function ExpensiveLayout() {
   </>
 }
 
-export const loader: LoaderFunction = async () => {
-  const expenses = await getExpenses();
+export const loader: LoaderFunction = async ({ request }) => {
+  const userId = await requiredUserSession(request)
+  const expenses = await getExpenses(userId)
   // if (!expenses || expenses.length === 0) {
   //   throw json({ message: 'Could not find any expenses' }, { status: 404, statusText: 'No expenses found! ' })
   // }

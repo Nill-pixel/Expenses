@@ -45,3 +45,6 @@ export interface TypeUser {
   email: string
   password: string
 }
+export interface TypeUserId {
+  userId: string
+}

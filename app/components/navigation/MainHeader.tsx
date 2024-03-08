@@ -1,12 +1,10 @@
-import { Link, NavLink, useLoaderData } from '@remix-run/react';
+import { Form, Link, NavLink, useLoaderData } from '@remix-run/react';
 import Logo from '../util/Logo';
+import { TypeUserId } from '~/types/Types';
 
-interface UserIdProps {
-  userId: string
-}
 
 function MainHeader() {
-  const { userId } = useLoaderData<UserIdProps>()
+  const { userId } = useLoaderData<TypeUserId>()
   return (
     <header id="main-header">
       <Logo />
@@ -22,16 +20,16 @@ function MainHeader() {
       </nav>
       <nav id="cta-nav">
         <ul>
+
           <li>
             {userId &&
-              <form>
+              <Form method='POST' action='/logout' id='logout-form'>
                 <button className='cta-alt'>Logout</button>
-              </form>}
+              </Form>}
             {!userId && (<Link to="/auth" className="cta">
               Login
             </Link>)
             }
-
           </li>
         </ul>
       </nav>

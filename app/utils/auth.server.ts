@@ -17,24 +17,45 @@ const sessionStorage = createCookieSessionStorage({
 
 export const getUserFromSession = async (request: Request) => {
   const session = await sessionStorage.getSession(request.headers.get('Cookie'))
-  const useId = session.get('userId')
+  const userId = session.get('userId') as string
 
-  if (!useId) {
+  if (!userId) {
     return null
   }
-
-  return useId
+  return userId
 }
 
-const createUserSession = async (useId: string, redirectPath: string) => {
+const createUserSession = async (userId: string, redirectPath: string) => {
   const session = await sessionStorage.getSession()
-  session.set('useId', useId)
+  session.set('userId', userId)
   return redirect(redirectPath, {
     headers: {
       'Set-Cookie': await sessionStorage.commitSession(session)
     }
   })
 }
+
+export const destroyUserSession = async (request: Request) => {
+  const session = await sessionStorage.getSession(
+    request.headers.get('Cookie')
+  )
+
+  return redirect('/', {
+    headers: {
+      'Set-Cookie': await sessionStorage.destroySession(session)
+    }
+  })
+
+}
+
+export const requiredUserSession = async (request: Request) => {
+  const userId = await getUserFromSession(request)
+  if (!userId) {
+    throw redirect('/auth?mode=login');
+  }
+  return userId
+}
+
 
 export const signup = async ({ email, password }: TypeUser) => {
   const existingUser = await prisma.user.findFirst({ where: { email } })

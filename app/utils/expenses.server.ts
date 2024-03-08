@@ -1,13 +1,14 @@
 import { TypeExpense } from "~/types/Types";
 import { prisma } from "./database.server"
 
-export const addExpense = async (expenseData: TypeExpense) => {
+export const addExpense = async (expenseData: TypeExpense, userId: string) => {
   try {
     await prisma.expense.create({
       data: {
         title: expenseData.title,
         amount: +expenseData.amount,
-        date: new Date(expenseData.date)
+        date: new Date(expenseData.date),
+        User: { connect: { id: userId } }
       }
     });
   } catch (error) {
@@ -16,9 +17,10 @@ export const addExpense = async (expenseData: TypeExpense) => {
 
 }
 
-export const getExpenses = async () => {
+export const getExpenses = async (userId: string) => {
   try {
     const expenses = await prisma.expense.findMany({
+      where: { userId },
       orderBy: {
         date: 'desc'
       }
