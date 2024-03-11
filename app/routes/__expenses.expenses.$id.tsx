@@ -1,10 +1,11 @@
-import { ActionFunction, LoaderFunction, redirect } from "@remix-run/node";
+import { ActionFunction, LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { useLoaderData, useNavigate } from "@remix-run/react";
 import ExpenseForm from "~/components/expenses/ExpenseForm";
 import Modal from "~/components/util/Modal";
 import { TypeExpense } from "~/types/Types";
 import { deleteExpense, updateExpense } from "~/utils/expenses.server";
 import { validateExpenseInput } from "~/utils/validation.server";
+import { loader } from "./__expenses.expenses";
 // import { getExpense } from "~/utils/expenses.server";
 
 export default function UpdateExpensesPage() {
@@ -47,4 +48,14 @@ export const action: ActionFunction = async ({ params, request }) => {
   }
 
 
+}
+
+export const meta: MetaFunction<typeof loader> = ({ params, location, data, matches }) => {
+  const parentMeta = matches.find(match => match.params.id === params.id)
+  const parentTitle = parentMeta ? parentMeta.meta.find(m => m.name === 'title')?.content : '';
+  console.log(parentMeta)
+  return [{
+    title: parentMeta,
+    content: 'Update Expense.'
+  }]
 }

@@ -1,5 +1,6 @@
-import { Link } from '@remix-run/react';
+import { Link, MetaFunction } from '@remix-run/react';
 import { FaArrowRight, FaDollarSign, FaChartBar } from 'react-icons/fa';
+import { loader } from './__expenses.expenses';
 
 export default function Index() {
   return (
@@ -43,4 +44,9 @@ export default function Index() {
   );
 }
 
-export function meta() { }
+export const meta: MetaFunction<typeof loader> = () => {
+  return [{
+    title: 'Expenses Web - The Complete App',
+    content: 'Manage your expenses with ease.'
+  }]
+}

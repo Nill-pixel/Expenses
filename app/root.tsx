@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Link,
   Links,
@@ -12,15 +12,19 @@ import {
 } from "@remix-run/react";
 import sharedStyles from '~/css/shared.css'
 import Error from "./components/util/Error";
+import { loader } from "./routes/__expenses.expenses";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: sharedStyles }];
 
 interface DocumentProps {
-  title: string,
   children: React.ReactNode
 }
 
-export const Document: React.FC<DocumentProps> = ({ title, children }) => {
+export const meta: MetaFunction<typeof App> = () => {
+  return [{ title: 'Remix Expenses Web' }]
+}
+
+export const Document: React.FC<DocumentProps> = ({ children }) => {
   return (
     <html lang="en">
       <head>
@@ -28,7 +32,6 @@ export const Document: React.FC<DocumentProps> = ({ title, children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
-        <title>{title}</title>
       </head>
       <body>
         {children}
@@ -43,8 +46,8 @@ export const Document: React.FC<DocumentProps> = ({ title, children }) => {
 
 export default function App() {
   return (
-    <Document title="Expense Web">
-      <title></title>
+    <Document>
+      <head></head>
     </Document>
   );
 }
@@ -56,7 +59,7 @@ export function ErrorBoundary() {
   // when true, this is what used to go to `CatchBoundary`
   if (isRouteErrorResponse(error)) {
     return (<>
-      <Document title={error.statusText}>
+      <Document>
         <main>
           <Error title={error.statusText}>
             <p>
@@ -75,7 +78,7 @@ export function ErrorBoundary() {
   let errorMessage = "An error occurred";
 
   return (<>
-    <Document title={errorMessage}>
+    <Document>
       <main>
         <Error title={errorMessage}>
           <p>
