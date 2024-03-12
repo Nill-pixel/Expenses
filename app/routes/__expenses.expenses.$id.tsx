@@ -51,11 +51,10 @@ export const action: ActionFunction = async ({ params, request }) => {
 }
 
 export const meta: MetaFunction<typeof loader> = ({ params, location, data, matches }) => {
-  const parentMeta = matches.find(match => match.params.id === params.id)
-  const parentTitle = parentMeta ? parentMeta.meta.find(m => m.name === 'title')?.content : '';
-  console.log(parentMeta)
+  const parentMeta = matches.find((match) => match.params.id === params.id)
+  const title = parentMeta?.meta.map(title => title)[0]?.title
   return [{
-    title: parentMeta,
+    title: title,
     content: 'Update Expense.'
   }]
 }

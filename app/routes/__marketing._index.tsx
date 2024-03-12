@@ -1,6 +1,7 @@
 import { Link, MetaFunction } from '@remix-run/react';
 import { FaArrowRight, FaDollarSign, FaChartBar } from 'react-icons/fa';
 import { loader } from './__expenses.expenses';
+import { HeadersFunction } from '@remix-run/node';
 
 export default function Index() {
   return (
@@ -49,4 +50,8 @@ export const meta: MetaFunction<typeof loader> = () => {
     title: 'Expenses Web - The Complete App',
     content: 'Manage your expenses with ease.'
   }]
+}
+
+export const header: HeadersFunction = () => {
+  return { 'Cache-Control': 'max-age=3600' }
 }
