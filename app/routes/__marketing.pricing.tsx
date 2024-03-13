@@ -1,4 +1,4 @@
-import { MetaFunction } from '@remix-run/node';
+import { HandleDataRequestFunction, HeadersFunction, MetaFunction } from '@remix-run/node';
 import { FaTrophy, FaHandshake } from 'react-icons/fa';
 
 import PricingPlan from '~/components/marketing/PricingPlan';
@@ -48,3 +48,9 @@ export const meta: MetaFunction<typeof loader> = () => {
     content: 'See our pricing plans.'
   }]
 }
+
+export const headers: HeadersFunction = ({ actionHeaders, loaderHeaders, parentHeaders }) => ({
+  "Cache-Control": parentHeaders.get('Cache-Control') as string,
+})
+
+export const handle = { disableJs: true }

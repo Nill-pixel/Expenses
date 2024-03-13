@@ -8,11 +8,12 @@ import {
   Scripts,
   ScrollRestoration,
   isRouteErrorResponse,
+  useMatches,
   useRouteError,
 } from "@remix-run/react";
 import sharedStyles from '~/css/shared.css'
 import Error from "./components/util/Error";
-import { loader } from "./routes/__expenses.expenses";
+import { Match } from "./types/Types";
 
 export const links: LinksFunction = () => [{ rel: "stylesheet", href: sharedStyles }];
 
@@ -25,6 +26,9 @@ export const meta: MetaFunction<typeof App> = () => {
 }
 
 export const Document: React.FC<DocumentProps> = ({ children }) => {
+  const matches = useMatches()
+
+  const disableJs = matches.some(match => (match as Match).handle?.disableJs)
   return (
     <html lang="en">
       <head>
@@ -37,7 +41,7 @@ export const Document: React.FC<DocumentProps> = ({ children }) => {
         {children}
         <Outlet />
         <ScrollRestoration />
-        <Scripts />
+        {!disableJs && <Scripts />}
         <LiveReload />
       </body>
     </html>
