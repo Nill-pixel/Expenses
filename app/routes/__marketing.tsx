@@ -1,4 +1,4 @@
-import { LinksFunction, LoaderFunction } from '@remix-run/node'
+import { HeadersFunction, LinksFunction, LoaderFunction } from '@remix-run/node'
 import { Outlet } from '@remix-run/react'
 import MainHeader from '~/components/navigation/MainHeader'
 import marketingStyles from '~/css/marketing.css'
@@ -19,3 +19,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: marketingStyles }]
 }
+
+export const headers: HeadersFunction = ({ actionHeaders, loaderHeaders, parentHeaders }) => ({
+  "Cache-Control": "max-age=300, s-maxage=3600",
+})

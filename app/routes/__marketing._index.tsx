@@ -1,7 +1,7 @@
 import { Link, MetaFunction } from '@remix-run/react';
 import { FaArrowRight, FaDollarSign, FaChartBar } from 'react-icons/fa';
 import { loader } from './__expenses.expenses';
-import { HeadersFunction } from '@remix-run/node';
+import { HandleDataRequestFunction, HeadersFunction } from '@remix-run/node';
 
 export default function Index() {
   return (
@@ -52,6 +52,8 @@ export const meta: MetaFunction<typeof loader> = () => {
   }]
 }
 
-export const header: HeadersFunction = () => {
-  return { 'Cache-Control': 'max-age=3600' }
-}
+export const headers: HeadersFunction = ({ actionHeaders, loaderHeaders, parentHeaders }) => ({
+  "Cache-Control": parentHeaders.get('Cache-Control') as string,
+})
+
+export const handle = { disableJs: true }

@@ -1,4 +1,4 @@
-import { ActionFunction, LinksFunction, redirect } from '@remix-run/node'
+import { ActionFunction, HeadersFunction, LinksFunction, redirect } from '@remix-run/node'
 import AuthForm from '~/components/auth/AuthForm'
 import authStyle from '~/css/auth.css'
 import { TypeUser } from '~/types/Types'
@@ -32,7 +32,7 @@ export const action: ActionFunction = async ({ request }) => {
   } catch (error) {
     if (error instanceof CustomError && error.status === 422) {
       return { message: error.message }
-    }else if(error instanceof CustomError && error.status === 401){
+    } else if (error instanceof CustomError && error.status === 401) {
       return { message: error.message }
     }
   }
@@ -41,3 +41,7 @@ export const action: ActionFunction = async ({ request }) => {
 export const links: LinksFunction = () => {
   return [{ rel: 'stylesheet', href: authStyle }]
 }
+
+export const headers: HeadersFunction = ({ parentHeaders }) => ({
+  "Cache-Control": parentHeaders.get('Cache-Control') as string,
+})

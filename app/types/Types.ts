@@ -48,3 +48,8 @@ export interface TypeUser {
 export interface TypeUserId {
   userId: string
 }
+export interface Match {
+  handle?: {
+    disableJs?: boolean;
+  };
+}
