@@ -1,6 +1,6 @@
 # Welcome to !
 
-- [Expenses](https://remix-course-app.vercel.app/)
+- [Expenses](https://remix-course-1ugsakqq0-nill-pixel.vercel.app/)
 
 # Welcome to Remix!
 
